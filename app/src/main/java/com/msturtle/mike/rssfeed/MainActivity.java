@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //code to open edit rss screen..similiar to add feed screen
+            Intent intent = new Intent(this,EditRssFeedActivity.class);
+            startActivity(intent);
             return true;
         }
 
