@@ -1,8 +1,13 @@
 package com.msturtle.mike.rssfeed;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -42,4 +47,46 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    } //End class
+    //********************* Basic DB Operations
+
+    public void addRssFeed (RssFeed feed) {
+        SQLiteDatabase db = this.getWritableDatabase();     //open db connection
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_FEEDTITLE, feed.rssFeedTitle);
+        values.put(KEY_FEEDADDRESS, feed.rssFeedAddress);
+
+        db.insert(TABLE_FEEDS, null, values);
+        db.close();
+    }
+
+    public List<RssFeed> getRssFeeds () {
+        List<RssFeed> results = new ArrayList<RssFeed>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_FEEDS;
+        SQLiteDatabase db = this.getWritableDatabase();   //open db connection
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                RssFeed rssFeed = new RssFeed(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
+                results.add(rssFeed);
+
+            }  while (cursor.moveToNext());
+
+        } // end if
+
+        db.close();
+        return results;
+    } //end get method
+
+    public void deleteRssFeed (RssFeed feed) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FEEDS, KEY_ID + " = ? ", new String[] {String.valueOf(feed.id)});
+        db.close();
+    }
+
+    //*******************************************************
+
+} //End class
