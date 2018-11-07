@@ -21,6 +21,7 @@ public class RssFeedsAdapter extends ArrayAdapter<RssFeed> {
     public View getView (int position, View convertView, ViewGroup parent) {
         RssFeed feed = getItem(position);
 
+        //new cell gotten if recycled one was not passed in
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.rss_edit_feed_item_row, parent, false);
         }

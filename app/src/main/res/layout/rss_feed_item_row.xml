@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         app:srcCompat="@drawable/rss_feed_empty_image" />
 
-    <EditText
+    <TextView
         android:id="@+id/rss_feed_item_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:inputType="textPersonName"
         android:text="Title Text View" />
 
-    <EditText
+    <TextView
         android:id="@+id/rssFeedItemDescriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
