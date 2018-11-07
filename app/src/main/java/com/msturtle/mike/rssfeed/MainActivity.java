@@ -6,9 +6,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.List;
+
+import at.theengine.android.simple_rss2_android.RSSItem;
+import at.theengine.android.simple_rss2_android.SimpleRss2Parser;
+import at.theengine.android.simple_rss2_android.SimpleRss2ParserCallback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +35,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        SimpleRss2Parser parser = new SimpleRss2Parser("https://pingeb.org/feed",
+                new SimpleRss2ParserCallback() {
+                    @Override
+                    public void onFeedParsed(List<RSSItem> items) {
+                        for(int i = 0; i < items.size(); i++){
+                            Log.d("SimpleRss2ParserDemo",items.get(i).getTitle());
+                        }
+                    }
+                    @Override
+                    public void onError(Exception ex) {
+                        //Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d("please work", "please work");
+                    }
+                });
+        parser.parseAsync();
+
     }
 
     @Override
@@ -53,4 +79,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}
+} //Ends Class

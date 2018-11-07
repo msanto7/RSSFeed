@@ -13,17 +13,29 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Title RSS Feed" />
+        android:text="Title RSS Feed"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:paddingTop="10dp" />
 
     <TextView
         android:id="@+id/rssEditFeedAddressTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/rss_feed_item_textview"
         android:layout_below="@+id/rss_edit_feed_title_textview"
+        android:layout_alignStart="@+id/rss_feed_item_textview"
         android:layout_alignParentBottom="true"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="www.rss.feed.com"
-        android:textAppearance="@style/TextAppearance.AppCompat" />
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        tools:paddingTop="5dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:text="Tap to Remove" />
 </RelativeLayout>
