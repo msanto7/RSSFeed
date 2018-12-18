@@ -5,5 +5,7 @@
     <string name="title_activity_edit_rss_feed">Edit Rss Feeds</string>
     <string name="add_rss_feed_name_hint">Enter name for feed</string>
     <string name="add_rss_feed_address_hint">Enter address for feed</string>
+    <string name="title_activity_rss_item_view">RssItemViewActivity</string>
+    <string name="webview_banner_ad_id">ca-app-pub-4006649193142436/7473355672</string>
 
 </resources>

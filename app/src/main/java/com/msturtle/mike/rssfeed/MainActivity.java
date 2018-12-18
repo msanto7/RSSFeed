@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,9 +52,17 @@ public class MainActivity extends AppCompatActivity {
         feedCount = rssFeeds.size();
         retrievedFeedCount = 0;
 
+
+        //should check for internet connection first before calling for feed items
+        //show dialogue if no connection
+
+
         for (int i = 0; i < rssFeeds.size(); i++) {
             GetFeedItems(rssFeeds.get(i).rssFeedAddress);
         }
+
+
+
 
     } //&&&&&&&
 
@@ -100,6 +112,18 @@ public class MainActivity extends AppCompatActivity {
             Log.d("FEEDS RETRIEVED", "got all feeds");
             ListView listView = (ListView) findViewById(R.id.rssFeedItemListView);
             listView.setAdapter(new FeedItemAdapter(this, rssItems));
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(MainActivity.this, RssItemViewActivity.class);
+
+                    RssItem item = rssItems.get(position);
+
+                    intent.putExtra("url", item.getLink().toString());
+                    startActivity(intent);
+                }
+            });
 
         }
     }
