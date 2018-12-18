@@ -1,13 +1,15 @@
 package com.msturtle.mike.rssfeed;
 
+import java.net.URL;
+
 public class RssItem {
 
     private String title;
     private String description;
-    private String link;
+    private URL link;
 
     //Constructor
-    public RssItem (String title, String description, String link) {
+    public RssItem (String title, String description, URL link) {
         this.title = title;
         this.description = description;
         this.link = link;
@@ -24,7 +26,7 @@ public class RssItem {
     public void setDescription (String description) {
         this.description = description;
     }
-    public void setLink (String link) {
+    public void setLink (URL link) {
         this.link = link;
     }
     public String getTitle () {
@@ -33,7 +35,7 @@ public class RssItem {
     public String getDescription () {
         return description;
     }
-    public String getLink () {
+    public URL getLink () {
         return link;
     }
 

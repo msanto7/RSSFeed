@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="80dp">
 
+<!--
     <ImageView
         android:id="@+id/rssFeedItemImageView"
         android:layout_width="80dp"
@@ -13,25 +14,48 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         app:srcCompat="@drawable/rss_feed_empty_image" />
+  -->
 
     <TextView
         android:id="@+id/rss_feed_item_textview"
-        android:layout_width="wrap_content"
+        android:layout_width="246dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:ems="10"
+        android:layout_marginTop="3dp"
+        android:ems="14"
         android:inputType="textPersonName"
-        android:text="Title Text View" />
+        android:text="Title Text View"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/rssFeedItemDescriptionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
         android:layout_alignStart="@+id/rss_feed_item_textview"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine|textPersonName"
+        android:paddingBottom="5dp"
+        android:scrollHorizontally="false"
         android:text="Place Holder small text "
         android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <TextView
+        android:id="@+id/rssFeedItemLetterTextView"
+        android:layout_width="71dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:ems="10"
+        android:gravity="center_vertical|center_horizontal"
+        android:inputType="textPersonName"
+        android:paddingRight="5dp"
+        android:text="X"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 </RelativeLayout>

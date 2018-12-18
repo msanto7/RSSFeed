@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import at.theengine.android.simple_rss2_android.RSSItem;
@@ -19,6 +21,11 @@ import at.theengine.android.simple_rss2_android.SimpleRss2Parser;
 import at.theengine.android.simple_rss2_android.SimpleRss2ParserCallback;
 
 public class MainActivity extends AppCompatActivity {
+
+    ArrayList<RssItem> rssItems;
+    List<RssFeed> rssFeeds;
+    int feedCount;
+    int retrievedFeedCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,24 +43,67 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        rssItems = new ArrayList<RssItem>();
+        rssFeeds = new Database(this).getRssFeeds();
+        feedCount = rssFeeds.size();
+        retrievedFeedCount = 0;
 
-        SimpleRss2Parser parser = new SimpleRss2Parser("https://pingeb.org/feed",
-                new SimpleRss2ParserCallback() {
-                    @Override
-                    public void onFeedParsed(List<RSSItem> items) {
-                        for(int i = 0; i < items.size(); i++){
-                            Log.d("SimpleRss2ParserDemo",items.get(i).getTitle());
+        for (int i = 0; i < rssFeeds.size(); i++) {
+            GetFeedItems(rssFeeds.get(i).rssFeedAddress);
+        }
+
+    } //&&&&&&&
+
+    public void GetFeedItems (String feedAddress) {
+        try {
+            SimpleRss2Parser parser = new SimpleRss2Parser(feedAddress,
+                    new SimpleRss2ParserCallback() {
+                        @Override
+                        public void onFeedParsed(List<RSSItem> items) {
+                            for (int i = 0; i < items.size(); i++) {
+                                RssItem item = new RssItem();
+                                item.setTitle(items.get(i).getTitle());
+                                item.setDescription(items.get(i).getDescription());
+                                item.setLink(items.get(i).getLink());
+                                //Log.d("SimpleRss2ParserDemo",items.get(i).getTitle());
+
+                                Log.d("ITEM RECIEVED", items.get(i).getTitle());
+                                rssItems.add(item);
+                            }
+                            //code to make List view...would create brand new everytime though (not efficient)
+                            //retrievedFeedCount++;
+                            PopulateListView();
                         }
-                    }
-                    @Override
-                    public void onError(Exception ex) {
-                        //Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.d("please work", "please work");
-                    }
-                });
-        parser.parseAsync();
 
+                        @Override
+                        public void onError(Exception ex) {
+                            //Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.d("please work", "please work");
+                            //retrievedFeedCount++;
+                            PopulateListView();
+                        }
+                    });
+            parser.parseAsync();
+        }
+        catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            PopulateListView();
+        }
+
+
+    } //****************************************   Ends GetFeedItems
+
+    public void PopulateListView () {
+        retrievedFeedCount++;
+        if (retrievedFeedCount == feedCount) {
+            //populate the list once finished
+            Log.d("FEEDS RETRIEVED", "got all feeds");
+            ListView listView = (ListView) findViewById(R.id.rssFeedItemListView);
+            listView.setAdapter(new FeedItemAdapter(this, rssItems));
+
+        }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
